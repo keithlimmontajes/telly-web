@@ -1,5 +1,4 @@
 import axios from "axios";
-import store, { type RootState } from "../stores/store";
 
 export const baseURL = "https://telly-node.vercel.app/api/v1";
 const axiosInstance = axios.create({
