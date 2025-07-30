@@ -20,17 +20,20 @@ const FormLogin = ({ setStep }: { setStep: (step: string) => void }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await dispatch(loginWithEmail({ email, password }));
+    try {
+      const res = await dispatch(loginWithEmail({ email, password }));
 
-    if (res.meta.requestStatus === "fulfilled") {
-      const response = await postLogin({
-        email,
-      }).unwrap();
-
-      if (response?.code) {
-        send2FAEmail(email, response?.code);
-        setStep("verify");
+      if (res.meta.requestStatus === "fulfilled") {
+        const response = await postLogin({
+          email,
+        }).unwrap();
+        if (response?.code) {
+          send2FAEmail(email, response?.code);
+          setStep("verify");
+        }
       }
+    } catch (err) {
+      console.error("Registration error:", err);
     }
   };
 
@@ -94,10 +97,12 @@ const FormLogin = ({ setStep }: { setStep: (step: string) => void }) => {
         <GoogleLoginButton onSuccess={handleGoogleSuccess} />
         <button
           type="button"
-          className="w-1/2 flex items-center justify-center gap-1 bg-white border border-gray-300 text-gray-700  p-2 rounded-[8px] hover:bg-gray-900 text-sm"
+          className="w-1/2 flex items-center justify-center gap-1 bg-white border border-gray-300 text-gray-700 px-2 rounded-[8px] overflow-hidden whitespace-nowrap text-ellipsis"
         >
-          <FaApple />
-          <span> Sign in with Apple ID</span>
+          <FaApple className="flex-shrink-0" />
+          <span className="overflow-hidden text-ellipsis whitespace-nowrap w-full">
+            Sign in with Apple ID
+          </span>
         </button>
       </div>
 

@@ -35,7 +35,6 @@ const VerifyForm = ({ setStep }: { setStep: (step: string) => void }) => {
       )}
 
       <div className="my-6">
-        <p className="text-[14px] text-[#475569]">Code</p>
         <input
           type="number"
           inputMode="numeric"
