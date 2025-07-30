@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const state: RootState = store.getState();
     const token =  "";
 
     if (token) {
